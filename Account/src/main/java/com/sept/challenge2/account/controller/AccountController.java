@@ -30,11 +30,15 @@ public class AccountController {
     @PostMapping(path = "/account", consumes = "application/json", produces = "application/json")
     public ResponseEntity<Object> createAccount(@RequestBody Account account)
             throws Exception {
-        Account createdAccount = accountService.createAccount(account);
-        if (createdAccount == null){
-            return new ResponseEntity<>("Account already created!", HttpStatus.OK);
+        try{
+            Account createdAccount = accountService.createAccount(account);
+            if (createdAccount == null){
+                return new ResponseEntity<>("Account already created!", HttpStatus.OK);
+            }
+            return new ResponseEntity<>(createdAccount, HttpStatus.CREATED);
+        }catch (Exception e){
+            throw new Exception("Invalid id");
         }
-        return new ResponseEntity<>(createdAccount, HttpStatus.CREATED);
     }
 
     @GetMapping(path="/account/account{id}", consumes = "application/json", produces = "application/json")
