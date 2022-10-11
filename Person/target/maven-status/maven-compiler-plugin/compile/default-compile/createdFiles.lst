@@ -1,1 +1,5 @@
+com/sept/challenge2/person/controller/PersonController.class
 com/sept/challenge2/person/PersonApplication.class
+com/sept/challenge2/person/service/PersonService.class
+com/sept/challenge2/person/dao/PersonDao.class
+com/sept/challenge2/person/model/Person.class
