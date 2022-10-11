@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(path="/account")
@@ -36,16 +37,15 @@ public class AccountController {
         return new ResponseEntity<>(createdAccount, HttpStatus.CREATED);
     }
 
-//    @GetMapping(path="/doctor{doctorId}", produces = "application/json")
-//    public ResponseEntity<Object> getBookingByDoctorId(@PathVariable("doctorId") Integer doctorId)
-//            throws Exception {
-//        List<Booking> bookingList = bookingService.findBookingByDoctorId(doctorId);
-//        if (bookingList.size() > 0) {
-//            return  new ResponseEntity<>(bookingList, HttpStatus.OK);
-//        } else  {
-//            throw new Exception("Could not find bookings for doctor");
-//        }
-//    }
+    @GetMapping(path="/account{id}", consumes = "application/json", produces = "application/json")
+    public ResponseEntity<Object> getAccountById(@PathVariable("id") Integer id)
+            throws Exception {
+        Optional account = accountService.getAccountById(id);
+        if (account == null) {
+            throw new Exception("Could not find bookings for doctor");
+        }
+        return  new ResponseEntity<>(account, HttpStatus.OK);
+    }
 //
 //    // UPDATE booking --> patient's name, change isAvailability to false.
 //
