@@ -7,8 +7,8 @@
     <packaging>pom</packaging>
     <version>2.7.2</version>
 
-    <name>ND_Telemedicine_App</name>
-    <description>NDTelemedicine</description>
+    <name>S_Challenge_2</name>
+    <description>Challenge2</description>
     <properties>
         <java.version>11</java.version>
         <maven.compiler.source>11</maven.compiler.source>
