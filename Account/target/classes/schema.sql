@@ -5,6 +5,5 @@ CREATE TABLE IF NOT EXISTS account (
     account_name varchar(255) NOT NULL,
     balance varchar(255) NOT NULL,
     date DATE NOT NULL,
-    PRIMARY KEY (account_number),
-    CONSTRAINT id FOREIGN KEY (id) REFERENCES septChallenge2.person (id)
+    PRIMARY KEY (account_number)
 ) ENGINE=InnoDB;
