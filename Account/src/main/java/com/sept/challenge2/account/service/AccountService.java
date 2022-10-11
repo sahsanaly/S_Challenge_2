@@ -56,7 +56,6 @@ public class AccountService {
         for (int i=0; i<allAccounts.size();i++){
             if (allAccounts.get(i).getId()==account.getId()) {
                 accountDao.delete(allAccounts.get(i));
-                accountDao.save(allAccounts.get(i));
                 return allAccounts.get(i);
             }
         }

@@ -41,10 +41,11 @@ public class AccountController {
     public ResponseEntity<Object> getAccountById(@PathVariable("id") Integer id)
             throws Exception {
         Optional account = accountService.getAccountById(id);
-        if (account == null) {
-            throw new Exception("Could not find the account for the provided id");
+        if (!account.isPresent()) {
+            return  new ResponseEntity<>("Could not find the account for the provided id", HttpStatus.OK);
+        }else{
+            return  new ResponseEntity<>(account, HttpStatus.OK);
         }
-        return  new ResponseEntity<>(account, HttpStatus.OK);
     }
 
     @GetMapping(path="/accounts/account", consumes = "application/json", produces = "application/json")
@@ -65,7 +66,7 @@ public class AccountController {
         if (deletedAccount == null){
             return new ResponseEntity<>("No account exists or enter a valid id number!", HttpStatus.OK);
         }
-        return new ResponseEntity<>(deletedAccount, HttpStatus.CREATED);
+        return new ResponseEntity<>("Account deleted!", HttpStatus.CREATED);
     }
 
     @PutMapping(path = "/accounts/account", consumes = "application/json", produces = "application/json")
@@ -75,7 +76,7 @@ public class AccountController {
         if (updatedAccount == null){
             return new ResponseEntity<>("Nothing to update!", HttpStatus.OK);
         }
-        return new ResponseEntity<>(updatedAccount, HttpStatus.CREATED);
+        return new ResponseEntity<>("Account updated!", HttpStatus.CREATED);
     }
 
 
