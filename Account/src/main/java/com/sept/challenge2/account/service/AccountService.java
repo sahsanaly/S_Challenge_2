@@ -18,8 +18,13 @@ public class AccountService {
     public Account createAccount(Account account) {
         List<Account> numOfAccounts = accountDao.findAll();
         for (int i=0; i<numOfAccounts.size();i++){
-            if (i==numOfAccounts.size()-1){
-                account.setAccountNumber(numOfAccounts.get(i).getAccountNumber()+1);
+            if (i>0) {
+                if (i == numOfAccounts.size() - 1) {
+                    account.setAccountNumber(numOfAccounts.get(i).getAccountNumber() + 1);
+                    return accountDao.save(account);
+                }
+            }else{
+                account.setAccountNumber(numOfAccounts.get(i).getAccountNumber() + 1);
                 return accountDao.save(account);
             }
         }
@@ -30,7 +35,7 @@ public class AccountService {
         try {
             return accountDao.findById(id);
         } catch (Exception e) {
-            throw new NoSuchElementException("Booking ID not found");
+            throw new NoSuchElementException("Account ID not found");
         }
     }
 
@@ -57,12 +62,8 @@ public class AccountService {
     }
 
     public Account deleteAccount(Account account){
-        System.out.println(account.getAccountNumber());
-        System.out.println(account.getId());
         List<Account> allAccounts = accountDao.findAll();
         for (int i=0; i<allAccounts.size();i++){
-            System.out.println(allAccounts.get(i).getAccountNumber());
-            System.out.println(allAccounts.get(i).getId());
             if (allAccounts.get(i).getAccountNumber()==account.getAccountNumber() &&
                     allAccounts.get(i).getId()==account.getId()) {
                 accountDao.delete(allAccounts.get(i));
