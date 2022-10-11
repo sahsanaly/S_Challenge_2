@@ -58,6 +58,16 @@ public class AccountController {
         }
     }
 
+    @DeleteMapping(path="/accounts/account", consumes = "application/json", produces = "application/json")
+    public ResponseEntity<Object> deleteAccount(@RequestBody Account account)
+            throws Exception {
+        Account deletedAccount = accountService.deleteAccount(account);
+        if (deletedAccount == null){
+            return new ResponseEntity<>("No account exists or enter a valid id number!", HttpStatus.OK);
+        }
+        return new ResponseEntity<>(deletedAccount, HttpStatus.CREATED);
+    }
+
     @PutMapping(path = "/accounts/account", consumes = "application/json", produces = "application/json")
     public ResponseEntity<Object> updateAccount(@RequestBody Account account)
             throws Exception {
@@ -67,5 +77,6 @@ public class AccountController {
         }
         return new ResponseEntity<>(updatedAccount, HttpStatus.CREATED);
     }
+
 
 }
