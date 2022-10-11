@@ -17,16 +17,16 @@ public class AccountService {
 
     public Account createAccount(Account account) {
         List<Account> numOfAccounts = accountDao.findAll();
-        for (int i=0; i<numOfAccounts.size();i++){
-            if (i>0) {
+        if (numOfAccounts.size()>0) {
+            for (int i=0; i<numOfAccounts.size();i++) {
                 if (i == numOfAccounts.size() - 1) {
                     account.setAccountNumber(numOfAccounts.get(i).getAccountNumber() + 1);
                     return accountDao.save(account);
                 }
-            }else{
-                account.setAccountNumber(numOfAccounts.get(i).getAccountNumber() + 1);
-                return accountDao.save(account);
             }
+        }else{
+            account.setAccountNumber(1);
+            return accountDao.save(account);
         }
         return null;
     }
