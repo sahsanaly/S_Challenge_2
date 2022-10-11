@@ -23,9 +23,6 @@ public class Account {
 
     public Account() {
     }
-//    public Account(Integer id) {
-//        this.id = id;
-//    }
 
     public Account(Integer accountNumber, Integer id, String accountType, String accountName, String balance, LocalDate date) {
         this.accountNumber = accountNumber;
