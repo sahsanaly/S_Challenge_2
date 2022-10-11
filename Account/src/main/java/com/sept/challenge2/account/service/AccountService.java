@@ -16,9 +16,14 @@ public class AccountService {
     AccountDao accountDao;
 
     public Account createAccount(Account account) {
-        int numOfAccounts = accountDao.findAll().size();
-        account.setAccountNumber(numOfAccounts+1);
-        return accountDao.save(account);
+        List<Account> numOfAccounts = accountDao.findAll();
+        for (int i=0; i<numOfAccounts.size();i++){
+            if (i==numOfAccounts.size()-1){
+                account.setAccountNumber(numOfAccounts.get(i).getAccountNumber()+1);
+                return accountDao.save(account);
+            }
+        }
+        return null;
     }
 
     public Optional getAccountById(Integer id) throws NoSuchElementException{
@@ -45,6 +50,22 @@ public class AccountService {
                 allAccounts.get(i).setDate(account.getDate());
 
                 accountDao.save(allAccounts.get(i));
+                return allAccounts.get(i);
+            }
+        }
+        return null;
+    }
+
+    public Account deleteAccount(Account account){
+        System.out.println(account.getAccountNumber());
+        System.out.println(account.getId());
+        List<Account> allAccounts = accountDao.findAll();
+        for (int i=0; i<allAccounts.size();i++){
+            System.out.println(allAccounts.get(i).getAccountNumber());
+            System.out.println(allAccounts.get(i).getId());
+            if (allAccounts.get(i).getAccountNumber()==account.getAccountNumber() &&
+                    allAccounts.get(i).getId()==account.getId()) {
+                accountDao.delete(allAccounts.get(i));
                 return allAccounts.get(i);
             }
         }
