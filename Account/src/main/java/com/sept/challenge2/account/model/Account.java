@@ -9,11 +9,11 @@ import java.time.LocalDate;
 public class Account {
 
     @Id
+    private Integer accountNumber;
+    @Column
     private Integer id;
     @Column
     private String accountType;
-    @Column
-    private String accountNumber;
     @Column
     private String accountName;
     @Column
@@ -24,13 +24,21 @@ public class Account {
     public Account() {
     }
 
-    public Account(Integer id, String accountType, String accountNumber, String accountName, String balance, LocalDate date) {
+    public Account(Integer accountNumber, Integer id, String accountType, String accountName, String balance, LocalDate date) {
+        this.accountNumber = accountNumber;
         this.id = id;
         this.accountType = accountType;
-        this.accountNumber = accountNumber;
         this.accountName = accountName;
         this.balance = balance;
         this.date = date;
+    }
+
+    public Integer getAccountNumber() {
+        return accountNumber;
+    }
+
+    public void setAccountNumber(Integer accountNumber) {
+        this.accountNumber = accountNumber;
     }
 
     public Integer getId() {
@@ -47,14 +55,6 @@ public class Account {
 
     public void setAccountType(String accountType) {
         this.accountType = accountType;
-    }
-
-    public String getAccountNumber() {
-        return accountNumber;
-    }
-
-    public void setAccountNumber(String accountNumber) {
-        this.accountNumber = accountNumber;
     }
 
     public String getAccountName() {
