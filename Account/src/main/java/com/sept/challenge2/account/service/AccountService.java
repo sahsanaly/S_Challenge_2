@@ -10,4 +10,10 @@ public class AccountService {
 
     @Autowired
     AccountDao accountDao;
+
+    public Account createAccount(Account account) {
+        int numOfAccounts = accountDao.findAll().size();
+        account.setId(numOfAccounts+1);
+        return accountDao.save(account);
+    }
 }
