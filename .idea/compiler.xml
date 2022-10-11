@@ -13,6 +13,7 @@
     <bytecodeTargetLevel>
       <module name="Account" target="11" />
       <module name="Person" target="11" />
+      <module name="S_Challenge_2" target="11" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
