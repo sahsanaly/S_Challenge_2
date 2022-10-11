@@ -5,6 +5,7 @@ import com.sept.challenge2.account.model.Account;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -26,6 +27,28 @@ public class AccountService {
         } catch (Exception e) {
             throw new NoSuchElementException("Booking ID not found");
         }
+    }
+
+    public List<Account> getAllAccounts(){
+            List<Account> allAccounts = accountDao.findAll();
+            return allAccounts;
+    }
+
+    public Account updateAccount(Account account) {
+        List<Account> allAccounts = accountDao.findAll();
+        for (int i=0; i<allAccounts.size();i++){
+            if (allAccounts.get(i).getAccountNumber()==account.getAccountNumber()){
+                allAccounts.get(i).setId(account.getId());
+                allAccounts.get(i).setAccountName(account.getAccountName());
+                allAccounts.get(i).setAccountType(account.getAccountType());
+                allAccounts.get(i).setBalance(account.getBalance());
+                allAccounts.get(i).setDate(account.getDate());
+
+                accountDao.save(allAccounts.get(i));
+                return allAccounts.get(i);
+            }
+        }
+        return null;
     }
 
 }

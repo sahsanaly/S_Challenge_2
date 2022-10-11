@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(path="/account")
+@RequestMapping(path="/")
 public class AccountController {
 
     @Autowired
@@ -27,7 +27,7 @@ public class AccountController {
      * @return booking object as created in database.
      * @throws Exception
      */
-    @PostMapping(path = "/", consumes = "application/json", produces = "application/json")
+    @PostMapping(path = "/account", consumes = "application/json", produces = "application/json")
     public ResponseEntity<Object> createAccount(@RequestBody Account account)
             throws Exception {
         Account createdAccount = accountService.createAccount(account);
@@ -37,47 +37,35 @@ public class AccountController {
         return new ResponseEntity<>(createdAccount, HttpStatus.CREATED);
     }
 
-    @GetMapping(path="/account{id}", consumes = "application/json", produces = "application/json")
+    @GetMapping(path="/account/account{id}", consumes = "application/json", produces = "application/json")
     public ResponseEntity<Object> getAccountById(@PathVariable("id") Integer id)
             throws Exception {
         Optional account = accountService.getAccountById(id);
         if (account == null) {
-            throw new Exception("Could not find bookings for doctor");
+            throw new Exception("Could not find the account for the provided id");
         }
         return  new ResponseEntity<>(account, HttpStatus.OK);
     }
-//
-//    // UPDATE booking --> patient's name, change isAvailability to false.
-//
-//    @GetMapping(path="/date{bookingDate}", produces = "application/json")
-//    public ResponseEntity<Object> getBookingsByDate(@PathVariable("bookingDate")
-//                                                    @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate bookingDate)
-//            throws Exception {
-//        List<Booking> bookingList = bookingService.getAllBookingsForDate(bookingDate);
-//        if (bookingList.size() > 0) {
-//            return  new ResponseEntity<>(bookingList, HttpStatus.OK);
-//        } else  {
-//            return new ResponseEntity<>("No bookings found", HttpStatus.BAD_REQUEST);
-//        }
-//    }
-//
-//    @GetMapping(path="/", produces = "application/json")
-//    public ResponseEntity<Object> getAllAvailabilities()
-//            throws Exception {
-//        List<Booking> availabilityList = bookingService.getAllAvailabilities();
-//        if (availabilityList.size() > 0) {
-//            return  new ResponseEntity<>(availabilityList, HttpStatus.OK);
-//        } else  {
-//            return new ResponseEntity<>("No availabilities found", HttpStatus.BAD_REQUEST);
-//        }
-//    }
-//
-//    @PutMapping(path = "/update", consumes = "application/json", produces = "application/json")
-//    public ResponseEntity<Object> updateBooking(@RequestBody Booking booking)
-//            throws Exception {
-////        System.out.println("Inside the update booking function");
-////        System.out.println(booking.getBookingId());
-//        bookingService.updateBooking(booking);
-//        return new ResponseEntity<>("Updated booking", HttpStatus.CREATED);
-//    }
+
+    @GetMapping(path="/accounts/account", consumes = "application/json", produces = "application/json")
+    public ResponseEntity<Object> getAllAccounts()
+            throws Exception {
+        List<Account> allAccounts = accountService.getAllAccounts();
+        if (allAccounts.size() > 0) {
+            return  new ResponseEntity<>(allAccounts, HttpStatus.OK);
+        }else  {
+            return new ResponseEntity<>("No accounts found", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PutMapping(path = "/accounts/account", consumes = "application/json", produces = "application/json")
+    public ResponseEntity<Object> updateAccount(@RequestBody Account account)
+            throws Exception {
+        Account updatedAccount = accountService.updateAccount(account);
+        if (updatedAccount == null){
+            return new ResponseEntity<>("Nothing to update!", HttpStatus.OK);
+        }
+        return new ResponseEntity<>(updatedAccount, HttpStatus.CREATED);
+    }
+
 }
